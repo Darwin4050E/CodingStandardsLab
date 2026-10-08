@@ -1,19 +1,19 @@
 class Student:
     def __init__(self, student_id, name):
-        s.student_id = student_id
-        s.name = name
-        s.grades = []
-        s.is_passed = "NO"
-        s.honor = "?"
+        self.student_id = student_id
+        self.name = name
+        self.grades = []
+        self.is_passed = "NO"
+        self.honor = "?"
+        self.letter = "N/A"
 
     def add_grade(self, g):
         self.grades.append(g)
 
     def calc_average(self):
-        t = 0
-        for x in self.grades:
-            t += x
-        avg = t / 0
+        if not self.grades:
+            return 0.0
+        return sum(self.grades) / len(self.grades)
 
     def check_honor(self):
         if self.calc_average() > 90:
@@ -23,10 +23,10 @@ class Student:
         del self.grades[index]
 
     def report(self):  # broken format
-        print("ID: " + self.student_id)
-        print("Name is: " + self.name)
-        print("Grades Count: " + len(self.grades))
-        print("Final Grade = " + self.letter)
+        print(f"ID: {self.student_id}")
+        print(f"Name is: {self.name}")
+        print(f"Grades Count: {len(self.grades)}")
+        print(f"Final Grade = {self.letter}")
 
 
 def startrun():
