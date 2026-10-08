@@ -74,22 +74,50 @@ class Student:
         return False
 
     def report(self):  # broken format
-        """Shows the student's academic summary on the screen."""
+        """Displays the student's formatted academic summary on the screen."""
+        print("-" * 40)
+        print("STUDENT REPORT")
+        print("-" * 40)
         print(f"ID: {self.student_id}")
-        print(f"Name is: {self.name}")
-        print(f"Grades Count: {len(self.grades)}")
+        print(f"Name: {self.name}")
+        print(f"Number of notes: {len(self.grades)}")
         print(f"Average: {self.calc_average():.2f}")
-        print(f"Final Grade = {self.letter}")
+        print(f"Letter rating: {self.get_letter_grade()}")
+        print(f"Status: {self.is_passed()}")
+        print(f"Box of Honor: {self.is_honor_roll()}")
+        print("-" * 40)
 
+def main():
+    """Demonstrates complete operation without uncaptured exceptions."""
+    print("=== PROOF OF CREATION WITH INVALID DATA ===")
+    try:
+        Student("", "John Doe")
+    except ValueError as err:
+        print(f"Captured correctly: {err}")
 
-def startrun():
-    """Run a Student workflow test."""
-    a = Student("x", "")
-    a.add_grade(100)
-    a.add_grade("Fifty")  # broken
-    a.calc_average()
-    a.is_honor_roll()
-    a.report()
+    print("\n=== STUDENT REGISTRATION AND OPERATIONS ===")
+    student = Student("ST-101", "John Doe")
 
+    # Add valid and invalid notes
+    student.add_grade(95.0)
+    student.add_grade(85.5)
+    student.add_grade(105.0) # Out of rank
+    student.add_grade("Fifty") # Non-numeric type
+    student.add_grade(92.0)
 
-startrun()
+    # Show initial report
+    student.report()
+
+    # Elimination by index and by value
+    print("\n=== NOTE DELETION TESTS ===")
+    student.delete_grade_by_index(1) # Removes 85.5
+    student.delete_grade_by_index(10) # Invalid index
+    student.delete_grade_by_value(95.0) # Removes 95.0
+    student.delete_grade_by_value(40.0) # Nonexistent value
+
+    # Show final report after editions
+    print("\n=== FINAL REPORT ===")
+    student.report()
+
+if __name__ == "__main__":
+    main()
