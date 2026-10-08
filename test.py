@@ -10,7 +10,6 @@ class Student:
         self.student_id = str(student_id).strip()
         self.name = str(name).strip()
         self.grades = []
-        self.honor = "?"
         self.letter = "N/A"
 
     def add_grade(self, grade):
@@ -52,10 +51,27 @@ class Student:
         """Returns True if the average is greater than or equal to 90."""
         return self.calc_average() >= 90.0
 
-    def delete_grade(self, index):
-        """Delete a note by its index if it is valid."""
-        if 0 <= index < len(self.grades):
-            del self.grades[index]
+    def delete_grade_by_index(self, index: int):
+        """Deletes a note given its position in the list."""
+        if isinstance(index, int) and 0 <= index < len(self.grades):
+            removed = self.grades.pop(index)
+            print(f"Note {removed} removed in index {index}.")
+            return True
+        print(f"Error: The index {index} is invalid or out of range.")
+        return False
+
+    def delete_grade_by_value(self, value: float):
+        """Eliminates the first occurrence of a specific note."""
+        try:
+            val_float = float(value)
+            if val_float in self.grades:
+                self.grades.remove(val_float)
+                print(f"Note {val_float} successfully removed.")
+                return True
+        except (ValueError, TypeError):
+            pass
+        print(f"Error: The note {value} does not exist in the record.")
+        return False
 
     def report(self):  # broken format
         """Shows the student's academic summary on the screen."""
@@ -73,7 +89,6 @@ def startrun():
     a.add_grade("Fifty")  # broken
     a.calc_average()
     a.is_honor_roll()
-    a.delete_grade(5)  # IndexError
     a.report()
 
 
