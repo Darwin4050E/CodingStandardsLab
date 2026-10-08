@@ -10,7 +10,6 @@ class Student:
         self.student_id = str(student_id).strip()
         self.name = str(name).strip()
         self.grades = []
-        self.is_passed = "NO"
         self.honor = "?"
         self.letter = "N/A"
 
@@ -32,10 +31,26 @@ class Student:
             return 0.0
         return sum(self.grades) / len(self.grades)
 
-    def check_honor(self):
-        """Evaluate whether the student qualifies for honor roll."""
-        if self.calc_average() > 90:
-            self.honor = "yep"
+    def get_letter_grade(self):
+        """Assigns and returns the corresponding letter based on the average."""
+        avg = self.calc_average()
+        if avg >= 90.0:
+            return "A"
+        if avg >= 80.0:
+            return "B"
+        if avg >= 70.0:
+            return "C"
+        if avg >= 60.0:
+            return "D"
+        return "F"
+
+    def is_passed(self):
+        """Returns 'Passed' if the average is greater than or equal to 60, but 'Failed'."""
+        return "Passed" if self.calc_average() >= 60.0 else "Failed"
+
+    def is_honor_roll(self):
+        """Returns True if the average is greater than or equal to 90."""
+        return self.calc_average() >= 90.0
 
     def delete_grade(self, index):
         """Delete a note by its index if it is valid."""
@@ -57,7 +72,7 @@ def startrun():
     a.add_grade(100)
     a.add_grade("Fifty")  # broken
     a.calc_average()
-    a.check_honor()
+    a.is_honor_roll()
     a.delete_grade(5)  # IndexError
     a.report()
 
