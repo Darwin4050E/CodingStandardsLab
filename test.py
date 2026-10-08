@@ -2,18 +2,29 @@
 
 class Student:
     """Represents a student with his grades and academic status."""
-    def __init__(self, student_id, name):
-        self.student_id = student_id
-        self.name = name
+    def __init__(self, student_id: str, name: str):
+        if not str(student_id).strip():
+            raise ValueError("The student ID cannot be empty.")
+        if not str(name).strip():
+            raise ValueError("The student's name cannot be empty.")
+        self.student_id = str(student_id).strip()
+        self.name = str(name).strip()
         self.grades = []
         self.is_passed = "NO"
         self.honor = "?"
         self.letter = "N/A"
 
     def add_grade(self, grade):
-        """Add a grade to the student's list."""
-        if isinstance(grade, (int, float)):
-            self.grades.append(grade)
+        """Add a numerical note if it is in the allowed range (0.0 to 100.0)."""
+        if isinstance(grade, bool) or not isinstance(grade, (int, float)):
+            print(f"Error: The note '{grade}' is not numerical.")
+            return False
+        grade_val = float(grade)
+        if 0.0 <= grade_val <= 100.0:
+            self.grades.append(grade_val)
+            return True
+        print(f"Error: The note {grade_val} is outside the range 0.0 to 100.0.")
+        return False
 
     def calc_average(self):
         """Calculate the average of the student's grades."""
