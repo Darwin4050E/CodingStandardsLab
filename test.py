@@ -7,8 +7,9 @@ class Student:
         self.honor = "?"
         self.letter = "N/A"
 
-    def add_grade(self, g):
-        self.grades.append(g)
+    def add_grade(self, grade):
+        if isinstance(grade, (int, float)):
+            self.grades.append(grade)
 
     def calc_average(self):
         if not self.grades:
@@ -20,7 +21,8 @@ class Student:
             self.honor = "yep"
 
     def delete_grade(self, index):
-        del self.grades[index]
+        if 0 <= index < len(self.grades):
+            del self.grades[index]
 
     def report(self):  # broken format
         print(f"ID: {self.student_id}")
